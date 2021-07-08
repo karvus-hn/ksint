@@ -1,0 +1,9 @@
+form{
+	position:absolute;
+	left:50%;
+	bottom:50%;
+	border: solid;
+    padding: 100px;
+    border-color: yellowgreen;
+    border-radius: 50px;
+}
