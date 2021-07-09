@@ -2,45 +2,61 @@ const e = React.createElement;
 
 const urlUsers='https://jsonplaceholder.typicode.com/users';
 const urlTODOs='https://jsonplaceholder.typicode.com/todos';
-var logE=false;
 
-async function handleSubmit(g) 
+class LoginForm extends React.Component
 {
-	g.preventDefault();
-	console.log('Отправлена форма.');
-	userName=document.getElementById('userId').value;
-	psw=document.getElementById('userPsw').value;
-	let response = await fetch(urlUsers+'?username='+userName+'&website='+psw);
-	if (response.ok) 
-	{ 
-	  let json = await response.json();
-	  if (json[0]==undefined)
-	  {
-		logE=true;
-		LoginForm();
-	  }
-	  else 
-	  {
-	  sessionStorage['isLogged']=true;
-	  console.log(json[0]);
-	  TDList();
-	  }
-	} 
-	else {
-	  alert("Ошибка HTTP: " + response.status);
+	constructor(props)
+	{
+		super(props);
+		this.state={ userL:"",userP:"",error:false,user:{}};
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChangeL = this.handleChangeL.bind(this);
+		this.handleChangeP = this.handleChangeP.bind(this);
+	}
+	handleSubmit(g)
+	{
+		g.preventDefault();
+		fetch(urlUsers+'?username='+this.state.userL+'&website='+this.state.userP)
+		.then((response)=>response.json())
+		.then((json)=>
+		{
+			if (json[0]==undefined)
+			{
+				this.setState({error:true});
+				console.log(this.state);
+				render();
+			}
+			else 
+			{
+				sessionStorage['isLogged']=true;
+				console.log(json[0]);
+				TDList();
+			}
+		});
 	}
 	
-}
-
-function LoginForm() 
-{
-	const login= e('p',{},[e('label',{},'Логин'),e('input',{id:'userId'},null)]);
-	const psw=e('p',{},[e('label',{},'Пароль'),e('input',{id:'userPsw',type:'password'},null)]);
-	const sbmButton=e('button',{onClick:handleSubmit},"Войти");
-	const logError= logE?e('p',{color:'red'},'Неверный логин или пароль'):'';
-	const container = e('form',{},[login,psw,sbmButton,logError]);
-	ReactDOM.render(container,document.getElementById('root'));
-}
+	handleChangeL(g)
+	{
+		this.setState({ userL: g.target.value });
+	}
+	
+	handleChangeP(g)
+	{
+		this.setState({ userP: g.target.value });
+	}
+	render ()
+	{
+		return e("form", null, 
+		e("p", null, 
+			e("label", null, "Логин"), 
+			e("input", {onChange:this.handleChangeL,id: "userId",value:this.state.userL})), 
+		e("p", null, 
+			e("label", null, "Пароль"), 
+			e("input", {onChange:this.handleChangeP,id: "userPsw",type: "password",value:this.state.userP})), 
+		e("button", {onClick: this.handleSubmit}, "Войти"),
+		this.state.error?e('p',{color:'red'},'Неверный логин или пароль'):'');
+	}
+};
 
 function TDList()
 {
@@ -51,4 +67,4 @@ function TDList()
 
 if (JSON.parse(sessionStorage.getItem('isLogged')))
 	TDList();
-else LoginForm();
+else ReactDOM.render(e(LoginForm,null),document.getElementById('root'));
