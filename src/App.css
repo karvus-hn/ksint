@@ -1,0 +1,68 @@
+form.login{
+	position:absolute;
+	left:38%;
+	bottom:50%;
+	border: solid;
+	padding: 100px;
+	border-color: yellowgreen;
+	border-radius: 50px;
+	text-align:center;
+}
+form.ntd{
+	border: solid;
+	padding: 25px;
+	border-color: #329acd;
+	border-radius: 50px;
+	width: 350px;
+}
+.cmpl{
+	text-decoration:line-through;
+}
+a{
+	text-decoration:none;
+	color:black;
+	font-size: 20px;
+}
+
+.del{
+	background-image: url(del2.png);
+	border:none !important;
+	height:20px;
+	width:auto;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position-y: center;
+}
+
+ul {
+    display: table;
+    list-style-type: none;
+    margin: 25px;
+}
+
+li {
+	flex-direction:column;
+	padding: 10px;
+	margin:10px;
+	background: linear-gradient(to bottom, rgba(125, 185, 232, 0) 60%, #d6d2d2 100%);
+	border: solid;
+	border-radius: 25px;
+	border-color: #329acd;
+}
+
+button {
+	margin-left:15px;
+}
+
+input {
+	width:175px;
+	margin:5px;
+}
+
+label {
+	display:block;
+}
+
+form.login>button {
+	margin-left:0px;
+}
