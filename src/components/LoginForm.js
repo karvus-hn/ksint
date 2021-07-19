@@ -1,6 +1,6 @@
 import React from "react";
 
-const urlUsers='https://jsonplaceholder.typicode.com/users';
+const urlUsers = 'http://localhost:3001/users';
 
 class LoginForm extends React.Component
 {
